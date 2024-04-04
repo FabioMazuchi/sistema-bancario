@@ -10,7 +10,8 @@ count_saque = 0
 extrato = ""
 
 
-def depositar(saldo, valor, extrato, /):
+def depositar(saldo, extrato, /):
+    valor = float(input("Valor do depósito: "))
     if valor <= 0:
         print(f"{RED}Valor inválido!\033[m")
     else:
@@ -43,7 +44,8 @@ def sacar(*, saldo, extrato, valor_limite, limite_de_saques):
 
 
 def exibir_extrato(saldo, /, *, extrato):
-    print(f"Extrato:  \n{extrato} \nSaldo: R${saldo:.2f}")
+    print(" EXTRATO ".center(40, "="))
+    print(f"{extrato} \n{BLUE}Saldo: R${saldo:.2f}\033[m")
 
 
 print(f" {BLUE}BANCO DEVSOLUTIONS \033[m".center(50))
@@ -60,8 +62,7 @@ while True:
     opçao = input(menu).lower()
 
     if opçao == "d":  # DEPÓSITO
-        valor = float(input("Digite o valor: "))
-        saldo, extrato = depositar(saldo, valor, extrato)
+        saldo, extrato = depositar(saldo, extrato)
 
     elif opçao == "s":  # SAQUE
         saldo, extrato = sacar(
