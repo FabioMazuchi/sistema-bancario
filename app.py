@@ -1,8 +1,10 @@
 RED = "\033[1;31m"
 BLUE = "\033[1;34m"
 GREEN = "\033[0;32m"
+NUM_AGENCIA = "0001"
 
 usuarios = []
+contas_correntes = []
 saldo = 0
 limite_de_saques = 3
 valor_limite = 500
@@ -21,10 +23,30 @@ def criar_usuario(
             "nome": nome,
             "data_nascimento": data_nascimento,
             "endereço": endereço,
+            "contas": []
         }
     )
-    print(f"{GREEN}usuário cadastrado com sucesso!\033[m")
+    print(f"{GREEN}Usuário cadastrado com sucesso!\033[m")
     return usuarios
+
+
+def criar_conta_corrente(contas_correntes, usuarios, cpf):
+    num_da_conta = len(contas_correntes) + 1
+    cpf_existe = [user for user in usuarios if user["cpf"] == cpf]
+
+    if cpf_existe:
+        contas_correntes.append({
+            "numero": num_da_conta,
+            "agencia": NUM_AGENCIA,
+            "cpf": cpf
+        })
+
+        [user["contas"].append(num_da_conta)
+            for user in usuarios if user["cpf"] == cpf]
+
+        print(f"{GREEN}Conta corrente criada com sucesso!\033[m")
+    else:
+        print(f"{RED}Usuário não existe!\033[m")
 
 
 def depositar(saldo, extrato, /):
@@ -69,6 +91,7 @@ print(f" {BLUE}BANCO DEVSOLUTIONS \033[m".center(50))
 menu = """
 **************** MENU *******************
 (u) Cadastrar Usuário
+(c) Criar conta corrente
 (d) Deposito
 (s) Saque
 (e) Extrato
@@ -119,6 +142,10 @@ while True:
             )
         else:
             print(f"{RED}CPF já existe!\033[m")
+
+    elif opçao == 'c':  # CRIAR CONTA CORRENTE
+        cpf = input("CPF apenas números: ")
+        criar_conta_corrente(contas_correntes, usuarios, cpf)
 
     elif opçao == "q":  # SAIR
         break
