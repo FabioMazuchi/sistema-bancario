@@ -2,7 +2,7 @@
 
 ### Boas vindas ao projeto banco DEVSOLUTIONS
 
-Neste projeto foi implementado as funcinalidades de:
+Neste projeto foi implementado as funcionalidades de:
 * Criar usuário
 * Cria conta corrente
 * Depositar
