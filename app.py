@@ -2,12 +2,29 @@ RED = "\033[1;31m"
 BLUE = "\033[1;34m"
 GREEN = "\033[0;32m"
 
-
+usuarios = []
 saldo = 0
 limite_de_saques = 3
 valor_limite = 500
 count_saque = 0
 extrato = ""
+
+
+def criar_usuario(
+    cpf, nome, data_nascimento, logradouro,
+    numero, bairro, cidade, estado, usuarios
+):
+    endereço = f"{logradouro}, {numero} - {bairro} - {cidade}/{estado.upper()}"
+    usuarios.append(
+        {
+            "cpf": cpf,
+            "nome": nome,
+            "data_nascimento": data_nascimento,
+            "endereço": endereço,
+        }
+    )
+    print(f"{GREEN}usuário cadastrado com sucesso!\033[m")
+    return usuarios
 
 
 def depositar(saldo, extrato, /):
@@ -51,6 +68,7 @@ def exibir_extrato(saldo, /, *, extrato):
 print(f" {BLUE}BANCO DEVSOLUTIONS \033[m".center(50))
 menu = """
 **************** MENU *******************
+(u) Cadastrar Usuário
 (d) Deposito
 (s) Saque
 (e) Extrato
@@ -74,6 +92,33 @@ while True:
 
     elif opçao == "e":  # EXTRATO
         exibir_extrato(saldo, extrato=extrato)
+
+    elif opçao == "u":  # CRIAR USUÁRIO
+        print(" CADASTRO DE USUÁRIO ".center(40, "#"))
+        cpf = input("CPF apenas números: ")
+        cpf_existe = [user for user in usuarios if user["cpf"] == cpf]
+
+        if not cpf_existe:
+            nome = input("Nome: ")
+            data_nascimento = input("Data de nascimento DD/MM/AAAA: ")
+            logradouro = input("Logradouro: ")
+            numero = input("N°: ")
+            bairro = input("Bairro: ")
+            cidade = input("Cidade: ")
+            estado = input("Estado sigla: ")
+            usuarios = criar_usuario(
+                cpf,
+                nome,
+                data_nascimento,
+                logradouro,
+                numero,
+                bairro,
+                cidade,
+                estado,
+                usuarios,
+            )
+        else:
+            print(f"{RED}CPF já existe!\033[m")
 
     elif opçao == "q":  # SAIR
         break
