@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 RED = "\033[1;31m"
 BLUE = "\033[1;34m"
 GREEN = "\033[0;32m"
@@ -10,6 +12,78 @@ limite_de_saques = 3
 valor_limite = 500
 count_saque = 0
 extrato = ""
+
+
+class Cliente:
+    def __init__(self, endereço) -> None:
+        self._endereço = endereço
+        self._contas = []
+
+    def realizar_transaçao(self, conta, transaçao):
+        pass
+
+    def adicionar_conta(self, conta):
+        pass
+
+
+class PessoaFisica(Cliente):
+    def __init__(self, endereço, cpf, nome, data_nascimento) -> None:
+        super().__init__(endereço)
+        self._cpf = cpf
+        self._nome = nome
+        self._data_nascimento = data_nascimento
+
+
+class Historico:
+    def adicionar_transaçao(self, dtransaçao):
+        pass
+
+
+class Conta:
+    def __init__(self, saldo, numero, agencia, cliente, historico) -> None:
+        self._saldo = saldo
+        self._numero = numero
+        self._agencia = agencia
+        self._cliente = cliente
+        self._historico = historico
+
+    def saldo(self) -> float:
+        pass
+
+    @classmethod
+    def nova_conta(cls, cliente: Cliente, numero: int):
+        pass
+
+    def sacar(self, valor: float) -> bool:
+        pass
+
+    def depositar(self, valor: float) -> bool:
+        pass
+
+
+class ContaCorrente(Conta):
+    def __init__(self, saldo, numero, agencia, cliente, historico) -> None:
+        super().__init__(saldo, numero, agencia, cliente, historico)
+        self._limite = 50
+        self._limite_saques = 3
+
+
+class Transaçao(ABC):
+    @abstractmethod
+    def registrar(self, conta):
+        pass
+
+
+class Deposito(Transaçao):
+    def __init__(self, valor) -> None:
+        self._valor = valor
+
+    def registrar(self, conta):
+        pass
+
+
+class Saque(Transaçao):
+    pass
 
 
 def criar_usuario(
