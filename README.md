@@ -1,8 +1,8 @@
-# 🏦 BANCO DEVSOLUTIONS
+# 🏦 Projeto Sistema Bancário
 
-### Boas vindas ao projeto banco DEVSOLUTIONS
+### Boas vindas ao projeto!
 
-Neste projeto foi implementado as funcionalidades de:
+Neste projeto foram implementadas as funcionalidades de:
 * Criar usuário
 * Cria conta corrente
 * Depositar
